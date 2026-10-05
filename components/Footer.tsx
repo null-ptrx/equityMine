@@ -33,8 +33,8 @@ export function Footer() {
             <div className="flex flex-col gap-4">
               <h2 className="text-lg font-semibold text-white uppercase tracking-wider">Contact</h2>
               <address className="not-italic flex flex-col gap-3 text-gray-400">
-                <a href="tel:+918789322694" className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm transition-colors">+91 87893 22694</a>
-                <a href="mailto:milan.samajder@gmail.com" className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm transition-colors break-all">milan.samajder@gmail.com</a>
+                <a href="tel:+918789322694" className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm transition-colors">+91 99144 40682</a>
+                <a href="mailto:milan.samajder@gmail.com" className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm transition-colors break-all">equitymine@support.in</a>
                 <span>Mon – Sat · 10:00 AM to 7:00 PM</span>
               </address>
             </div>
@@ -42,18 +42,18 @@ export function Footer() {
             <div className="flex flex-col gap-4">
               <h2 className="text-lg font-semibold text-white uppercase tracking-wider">Office</h2>
               <address className="not-italic flex flex-col gap-1 text-gray-400">
-                <strong className="font-medium text-gray-300">Milan Samajder</strong>
-                <span>B-72, Peoples Housing Colony, Lohia Nagar</span>
-                <span>Patna, Bihar 800020</span>
+                <strong className="font-medium text-gray-300">Jatinder Singh</strong>
+                <span>New Court Road,  Near Mata Sundri Girls </span>
+                <span>College,  Mansa ,Punjab-(151505)</span>
               </address>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-gray-800 text-sm text-gray-500">
-          <p>© 2026 Milan Samajder. All rights reserved.</p>
+          <p>© 2026 Jatinder Singh. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <span>ARN-175151</span>
+            <span>ARN-277368</span>
             <span aria-hidden="true" className="w-1 h-1 bg-gray-600 rounded-full"></span>
             <span>EUIN E353458</span>
           </div>

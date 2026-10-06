@@ -13,11 +13,11 @@ export function Navbar() {
           <ul className="flex items-center gap-6 sm:gap-8 text-lg sm:text-xl font-medium text-gray-700 min-w-max">
             <li><a href="/" className="hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">Home</a></li>
             <li><a href="/about" className="hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">About</a></li>
-            <li><a href="/services" className="hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">Services</a></li>
+            <li><a href="https://www.njmutualfund.com/calculator" target = "_blank" className="hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">Calculators</a></li>
             <li><a href="/tools" className="hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">Tools</a></li>
             <li><a href="/resources" className="hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">Resources</a></li>
             <li><a href="/contact" className="hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">Contact</a></li>
-            <li><a href="/login" className="text-blue-600 hover:text-blue-800 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">Client Login</a></li>
+            <li><a href="https://www.njindiaonline.in/cdesk/login.fin" target = "_blank" className="text-blue-600 hover:text-blue-800 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm transition-colors">Client Login</a></li>
           </ul>
         </nav>
       </div>

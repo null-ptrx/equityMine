@@ -1,9 +1,28 @@
 "use client";
 export function Form() {
+  
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+
+    const res = await fetch("/api/contact", {
+      method : "POST", 
+      headers : {
+        "Content-Type" : "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (res.ok) {
+      form.reset();
+    }
+    
+  } 
   return (
     <section aria-labelledby="form-heading" className="bg-white">
       <div className="max-w-6xl mx-auto px-5 py-10 sm:px-8 sm:py-14 lg:px-10 lg:py-20 flex justify-center">
-        <form className="w-full max-w-2xl bg-gray-50 border border-gray-200 rounded-2xl p-6 sm:p-10 shadow-sm flex flex-col gap-8">
+        <form onSubmit={handleSubmit} className="w-full max-w-2xl bg-gray-50 border border-gray-200 rounded-2xl p-6 sm:p-10 shadow-sm flex flex-col gap-8">
           <div className="flex flex-col gap-2 text-center sm:text-left">
             <h2 id="form-heading" className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">Request a call back</h2>
             <p className="text-lg text-gray-600">Share a few details and we'll get in touch at a time that suits you.</p>
@@ -13,6 +32,7 @@ export function Form() {
             <div className="flex flex-col gap-2">
               <label htmlFor="fullName" className="text-sm font-semibold text-gray-700 uppercase tracking-wide">Full Name</label>
               <input 
+    
                 type="text" 
                 id="fullName" 
                 name="fullName" 
@@ -26,6 +46,7 @@ export function Form() {
             <div className="flex flex-col gap-2">
               <label htmlFor="mobile" className="text-sm font-semibold text-gray-700 uppercase tracking-wide">Mobile Number</label>
               <input 
+           
                 type="tel" 
                 id="mobile" 
                 name="mobile" 

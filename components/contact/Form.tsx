@@ -1,5 +1,4 @@
 "use client";
-
 export function Form() {
   return (
     <section aria-labelledby="form-heading" className="bg-white">

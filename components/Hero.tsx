@@ -26,35 +26,35 @@ export function Hero() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 sm:mt-12">
           <div className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow justify-center items-center text-center gap-2">
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">AMFI Registration</span>
-            <span className="text-xl font-bold text-gray-900">ARN-175151</span>
+            <span className="text-xl font-bold text-gray-900">ARN-277368</span>
           </div>
           <div className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow justify-center items-center text-center gap-2">
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">EUIN</span>
-            <span className="text-xl font-bold text-gray-900">E353458</span>
+            <span className="text-xl font-bold text-gray-900">E522524</span>
           </div>
           <div className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow justify-center items-center text-center gap-2">
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Based In</span>
-            <span className="text-xl font-bold text-gray-900">Patna</span>
+            <span className="text-xl font-bold text-gray-900">Mansa</span>
           </div>
           <div className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow justify-center items-center text-center gap-2">
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Distributor</span>
-            <span className="text-xl font-bold text-gray-900">Milan Samajder</span>
+            <span className="text-xl font-bold text-gray-900">Jitender Singh</span>
           </div>
           <div className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow justify-center items-center text-center gap-2">
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Experience</span>
-            <span className="text-xl font-bold text-gray-900">5+ Years</span>
+            <span className="text-xl font-bold text-gray-900">6+ Years</span>
           </div>
           <div className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow justify-center items-center text-center gap-2">
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Families Served</span>
-            <span className="text-xl font-bold text-gray-900">393+</span>
+            <span className="text-xl font-bold text-gray-900">80+</span>
           </div>
           <div className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow justify-center items-center text-center gap-2">
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Assets Guided</span>
-            <span className="text-xl font-bold text-gray-900">₹8 Cr+</span>
+            <span className="text-xl font-bold text-gray-900">₹10 Cr+</span>
           </div>
           <div className="flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow justify-center items-center text-center gap-2">
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">AMFI ARN</span>
-            <span className="text-xl font-bold text-gray-900">175151</span>
+            <span className="text-xl font-bold text-gray-900">277368</span>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/mongodb";
 import ContactModel, { IContact } from "@/lib/models/Contact";
+import { requireAdmin } from "@/lib/middleware/requireAdmin";
 
 export interface ContactQuery {
   id: string;
@@ -44,8 +45,13 @@ function formatDoc(doc: Partial<IContact> & { _id?: mongoose.Types.ObjectId | st
   };
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) {
+      return auth.errorResponse!;
+    }
+
     await connectDB();
     const docs = await ContactModel.find().sort({ createdAt: -1, _id: -1 }).lean();
     const queries: ContactQuery[] = docs.map((d) => formatDoc(d as any));
@@ -119,6 +125,11 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) {
+      return auth.errorResponse!;
+    }
+
     const { id, status, priority, note } = await req.json();
 
     if (!id) {
@@ -166,6 +177,11 @@ export async function PATCH(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
+    const auth = await requireAdmin(req);
+    if (!auth.authorized) {
+      return auth.errorResponse!;
+    }
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 

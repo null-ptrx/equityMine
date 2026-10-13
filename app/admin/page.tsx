@@ -25,7 +25,9 @@ import {
   Sparkles,
   User,
   PlusCircle,
-  Check
+  Check,
+  LogOut,
+  ShieldCheck
 } from "lucide-react";
 
 export interface ContactQuery {
@@ -85,6 +87,7 @@ export default function AdminPage() {
     goal: "Wealth Creation",
     message: "",
   });
+  const [currentUser, setCurrentUser] = useState<{ id: string; name: string; email: string; role: string } | null>(null);
 
   // Show a quick notification toast
   const triggerToast = (msg: string) => {
@@ -92,11 +95,29 @@ export default function AdminPage() {
     setTimeout(() => setToastMessage(null), 3000);
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch (e) {
+      console.error("Logout failed", e);
+    } finally {
+      window.location.href = "/login";
+    }
+  };
+
   // Fetch queries from MongoDB API
   const fetchQueries = async (silent = false) => {
     try {
       if (!silent) setLoading(true);
       const res = await fetch("/api/contact");
+      if (res.status === 401) {
+        window.location.href = "/login?from=/admin";
+        return;
+      }
+      if (res.status === 403) {
+        window.location.href = "/login?error=forbidden&from=/admin";
+        return;
+      }
       if (res.ok) {
         const json = await res.json();
         setQueries(json.data || []);
@@ -110,9 +131,35 @@ export default function AdminPage() {
 
   useEffect(() => {
     let isMounted = true;
+
+    // Client-side UX route guard checking authentication and admin role
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!isMounted) return;
+        if (!data.authenticated || data.user?.role !== "admin") {
+          window.location.href = data.authenticated
+            ? "/login?error=forbidden&from=/admin"
+            : "/login?from=/admin";
+          return;
+        }
+        setCurrentUser(data.user);
+      })
+      .catch(() => {
+        if (isMounted) window.location.href = "/login?from=/admin";
+      });
+
     const initialLoad = async () => {
       try {
         const res = await fetch("/api/contact");
+        if (res.status === 401) {
+          window.location.href = "/login?from=/admin";
+          return;
+        }
+        if (res.status === 403) {
+          window.location.href = "/login?error=forbidden&from=/admin";
+          return;
+        }
         if (res.ok && isMounted) {
           const json = await res.json();
           setQueries(json.data || []);
@@ -527,6 +574,27 @@ export default function AdminPage() {
                 <span>Live Form</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </Link>
+
+              {currentUser && (
+                <div className="hidden md:flex items-center gap-2 pl-2 border-l border-slate-200 text-xs">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-teal-50 text-teal-800 border border-teal-200">
+                    <ShieldCheck className="w-3.5 h-3.5 text-teal-600" />
+                    <span className="font-semibold truncate max-w-[120px]">{currentUser.name}</span>
+                    <span className="text-[10px] bg-teal-200/80 text-teal-900 px-1.5 py-0.5 rounded font-bold uppercase">
+                      {currentUser.role}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              <button
+                onClick={handleLogout}
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-lg border border-rose-200 transition-colors cursor-pointer"
+                title="Sign out from Admin Console"
+              >
+                <LogOut className="w-3.5 h-3.5 text-rose-600" />
+                <span>Log Out</span>
+              </button>
             </div>
           </div>
         </div>

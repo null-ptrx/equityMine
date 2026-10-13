@@ -1,0 +1,247 @@
+"use client";
+
+import React, { useState, Suspense } from "react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Lock,
+  Mail,
+  AlertCircle,
+  ShieldAlert,
+  ShieldCheck,
+  ArrowRight,
+  User,
+  KeyRound,
+  CheckCircle2,
+} from "lucide-react";
+import logo from "../../public/logo.png";
+
+function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const errorParam = searchParams.get("error");
+  const fromParam = searchParams.get("from") || "/admin";
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(
+    errorParam === "forbidden"
+      ? "Access Denied: You are logged in with a standard user account. Administrator privileges are required to access the Admin Console."
+      : null
+  );
+  const [successInfo, setSuccessInfo] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage(null);
+    setSuccessInfo(null);
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setErrorMessage(data.error || "Invalid email or password");
+        setLoading(false);
+        return;
+      }
+
+      if (data.user.role === "admin") {
+        setSuccessInfo("Authenticated as Admin. Redirecting to Admin Console...");
+        setTimeout(() => {
+          router.push(fromParam);
+          router.refresh();
+        }, 600);
+      } else {
+        // Logged in as standard user
+        setSuccessInfo(
+          `Logged in as standard user (${data.user.email}). Note: You do NOT have admin permissions and cannot access /admin.`
+        );
+        setLoading(false);
+      }
+    } catch (err) {
+      setErrorMessage((err as Error).message || "An unexpected error occurred");
+      setLoading(false);
+    }
+  };
+
+  const autofillCredentials = (role: "admin" | "user") => {
+    if (role === "admin") {
+      setEmail("admin@equitymine.com");
+      setPassword("AdminPassword123!");
+    } else {
+      setEmail("user@equitymine.com");
+      setPassword("UserPassword123!");
+    }
+    setErrorMessage(null);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        <a href="/" className="inline-flex items-center gap-3 group focus:outline-none">
+          <Image
+            src={logo}
+            height={52}
+            alt="Equity Mine"
+            placeholder="blur"
+            className="w-auto h-12"
+          />
+          <span className="text-2xl font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
+            Equity Mine
+          </span>
+        </a>
+        <h1 className="mt-6 text-2xl font-bold tracking-tight text-slate-900">
+          Sign In to Your Account
+        </h1>
+        <p className="mt-2 text-sm text-slate-600">
+          Enter your administrator or user credentials below
+        </p>
+      </div>
+
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
+        <div className="bg-white py-8 px-6 shadow-sm border border-slate-200 rounded-2xl sm:px-10">
+          {/* Error Banner */}
+          {errorMessage && (
+            <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-start gap-3">
+              <ShieldAlert className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+              <div className="leading-relaxed">{errorMessage}</div>
+            </div>
+          )}
+
+          {/* Success Banner */}
+          {successInfo && (
+            <div className="mb-6 p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 text-sm flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
+              <div className="leading-relaxed">{successInfo}</div>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700">
+                Email Address
+              </label>
+              <div className="mt-1.5 relative rounded-lg shadow-2xs">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <Mail className="h-4 w-4 text-slate-400" />
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@equitymine.com"
+                  className="block w-full pl-10 pr-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600 text-slate-900"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700">
+                Password
+              </label>
+              <div className="mt-1.5 relative rounded-lg shadow-2xs">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <Lock className="h-4 w-4 text-slate-400" />
+                </div>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="block w-full pl-10 pr-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600 text-slate-900"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex justify-center items-center gap-2 py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-600 disabled:opacity-50 transition-colors cursor-pointer"
+            >
+              {loading ? (
+                <span>Authenticating...</span>
+              ) : (
+                <>
+                  <span>Sign In</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
+
+          {/* Quick Demo Credentials Box */}
+          <div className="mt-8 pt-6 border-t border-slate-200">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              Quick Test Credentials
+            </p>
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => autofillCredentials("admin")}
+                className="p-3 text-left border border-emerald-200 bg-emerald-50/60 hover:bg-emerald-100/60 rounded-xl transition-colors cursor-pointer group"
+              >
+                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Admin User</span>
+                </div>
+                <div className="text-[11px] text-emerald-700 mt-1 truncate">
+                  admin@equitymine.com
+                </div>
+                <div className="text-[10px] text-emerald-600 mt-0.5">
+                  Role: <span className="font-semibold">admin (Access OK)</span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => autofillCredentials("user")}
+                className="p-3 text-left border border-amber-200 bg-amber-50/60 hover:bg-amber-100/60 rounded-xl transition-colors cursor-pointer group"
+              >
+                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-800">
+                  <User className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Standard User</span>
+                </div>
+                <div className="text-[11px] text-amber-700 mt-1 truncate">
+                  user@equitymine.com
+                </div>
+                <div className="text-[10px] text-amber-600 mt-0.5">
+                  Role: <span className="font-semibold">user (Forbidden)</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 text-center text-xs text-slate-500">
+          <a href="/" className="hover:text-teal-700 transition-colors">
+            ← Back to Homepage
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
+  );
+}

@@ -77,6 +77,14 @@ export default function AdminPage() {
   const [newNote, setNewNote] = useState("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"table" | "cards">("table");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [newLeadForm, setNewLeadForm] = useState({
+    fullName: "",
+    email: "",
+    mobile: "",
+    goal: "Wealth Creation",
+    message: "",
+  });
 
   // Show a quick notification toast
   const triggerToast = (msg: string) => {
@@ -84,10 +92,10 @@ export default function AdminPage() {
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // Fetch queries from API
-  const fetchQueries = async () => {
+  // Fetch queries from MongoDB API
+  const fetchQueries = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       const res = await fetch("/api/contact");
       if (res.ok) {
         const json = await res.json();
@@ -96,83 +104,130 @@ export default function AdminPage() {
     } catch (err) {
       console.error("Failed to load queries", err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchQueries();
+    let isMounted = true;
+    const initialLoad = async () => {
+      try {
+        const res = await fetch("/api/contact");
+        if (res.ok && isMounted) {
+          const json = await res.json();
+          setQueries(json.data || []);
+        }
+      } catch (err) {
+        console.error("Failed to load queries", err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+    initialLoad();
+
+    // Auto-sync with DB every 4 seconds so submissions from live contact form show up on UI automatically
+    const interval = setInterval(() => {
+      fetchQueries(true);
+    }, 4000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
-  // Update Status handler
+  // Update Status handler: optimistic update, save to DB, refetch
   const handleStatusChange = async (id: string, newStatus: ContactQuery["status"]) => {
+    // 1. Optimistic UI update first
+    setQueries((prev) =>
+      prev.map((q) => (q.id === id ? { ...q, status: newStatus } : q))
+    );
+    if (selectedQuery?.id === id) {
+      setSelectedQuery((prev) => (prev ? { ...prev, status: newStatus } : null));
+    }
+    triggerToast(`Query status changed to "${STATUS_CONFIG[newStatus].label}"`);
+
+    // 2. Save to DB
     try {
       const res = await fetch("/api/contact", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status: newStatus }),
       });
+      // 3. Refetch again from DB
       if (res.ok) {
-        setQueries((prev) =>
-          prev.map((q) => (q.id === id ? { ...q, status: newStatus } : q))
-        );
-        if (selectedQuery?.id === id) {
-          setSelectedQuery((prev) => (prev ? { ...prev, status: newStatus } : null));
-        }
-        triggerToast(`Query status changed to "${STATUS_CONFIG[newStatus].label}"`);
+        await fetchQueries(true);
       }
     } catch (err) {
-      console.error(err);
+      console.error("Failed to update status in DB:", err);
+      await fetchQueries(true);
     }
   };
 
-  // Add internal note
+  // Add internal note: optimistic update, save to DB, refetch
   const handleAddNote = async (id: string) => {
     if (!newNote.trim()) return;
+    const noteText = newNote.trim();
+
+    // 1. Optimistic UI update first
+    setQueries((prev) =>
+      prev.map((q) =>
+        q.id === id ? { ...q, notes: [...(q.notes || []), noteText] } : q
+      )
+    );
+    if (selectedQuery?.id === id) {
+      setSelectedQuery((prev) =>
+        prev ? { ...prev, notes: [...(prev.notes || []), noteText] } : null
+      );
+    }
+    setNewNote("");
+    triggerToast("Note added");
+
+    // 2. Save to DB
     try {
       const res = await fetch("/api/contact", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, note: newNote.trim() }),
+        body: JSON.stringify({ id, note: noteText }),
       });
+      // 3. Refetch again from DB
       if (res.ok) {
-        const noteText = newNote.trim();
-        setQueries((prev) =>
-          prev.map((q) =>
-            q.id === id ? { ...q, notes: [...(q.notes || []), noteText] } : q
-          )
-        );
-        if (selectedQuery?.id === id) {
-          setSelectedQuery((prev) =>
-            prev ? { ...prev, notes: [...(prev.notes || []), noteText] } : null
-          );
-        }
-        setNewNote("");
-        triggerToast("Note added successfully");
+        await fetchQueries(true);
       }
     } catch (err) {
-      console.error(err);
+      console.error("Failed to save note to DB:", err);
+      await fetchQueries(true);
     }
   };
 
-  // Delete query
+  // Delete query: optimistic update, delete from DB, refetch
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this query entry?")) return;
+
+    // 1. Optimistic UI update first
+    setQueries((prev) => prev.filter((q) => q.id !== id));
+    if (selectedQuery?.id === id) {
+      setSelectedQuery(null);
+    }
+    triggerToast("Lead enquiry deleted");
+
+    // 2. Delete from DB
     try {
       const res = await fetch(`/api/contact?id=${id}`, { method: "DELETE" });
+      // 3. Refetch again from DB
       if (res.ok) {
-        setQueries((prev) => prev.filter((q) => q.id !== id));
-        if (selectedQuery?.id === id) {
-          setSelectedQuery(null);
-        }
-        triggerToast("Lead enquiry deleted");
+        await fetchQueries(true);
       }
     } catch (err) {
-      console.error(err);
+      console.error("Failed to delete from DB:", err);
+      await fetchQueries(true);
     }
   };
 
-  // Simulate inserting a sample client test query
+  // Simulate inserting a sample client test query:
+  // 1. UI update first
+  // 2. Save to DB
+  // 3. Refetch again from DB
   const handleSimulateNewQuery = async () => {
     const sampleGoals = [
       "Wealth Creation",
@@ -191,6 +246,7 @@ export default function AdminPage() {
     const randomName = sampleNames[Math.floor(Math.random() * sampleNames.length)];
     const randomGoal = sampleGoals[Math.floor(Math.random() * sampleGoals.length)];
 
+    const tempId = `QRY-${Math.floor(1000 + Math.random() * 9000)}`;
     const payload = {
       fullName: randomName,
       email: `${randomName.toLowerCase().replace(" ", ".")}@example.com`,
@@ -199,19 +255,111 @@ export default function AdminPage() {
       message: `Looking for personalized advisory regarding ${randomGoal.toLowerCase()}. Please connect over WhatsApp or call.`,
     };
 
+    const optimisticQuery: ContactQuery = {
+      id: tempId,
+      fullName: payload.fullName,
+      email: payload.email,
+      mobile: payload.mobile,
+      goal: payload.goal,
+      message: payload.message,
+      createdAt: new Date().toISOString(),
+      status: "new",
+      priority: randomGoal === "Wealth Creation" || randomGoal === "Retirement Planning" ? "high" : "medium",
+      notes: [],
+    };
+
+    // Step 1: Update UI first
+    setQueries((prev) => [optimisticQuery, ...prev]);
+    triggerToast(`New inquiry received from ${randomName}! Saving to DB...`);
+
+    // Step 2: Save to DB
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
       if (res.ok) {
-        const json = await res.json();
-        setQueries((prev) => [json.data, ...prev]);
-        triggerToast(`New inquiry received from ${randomName}!`);
+        // Step 3: Refetch again from DB
+        await fetchQueries(true);
+        triggerToast(`Inquiry from ${randomName} saved & synced with DB!`);
+      } else {
+        throw new Error("Failed to save to database");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Save to DB failed:", err);
+      // Rollback optimistic update if failed
+      setQueries((prev) => prev.filter((q) => q.id !== tempId));
+      triggerToast("Error saving inquiry to database");
+    }
+  };
+
+  // Add inquiry manually from Admin modal:
+  // 1. UI update first
+  // 2. Save to DB
+  // 3. Refetch again from DB
+  const handleCreateNewQuery = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newLeadForm.fullName.trim() || !newLeadForm.email.trim() || !newLeadForm.mobile.trim()) {
+      triggerToast("Please fill in required fields (Name, Email, Mobile)");
+      return;
+    }
+
+    const tempId = `QRY-${Math.floor(1000 + Math.random() * 9000)}`;
+    const payload = {
+      fullName: newLeadForm.fullName.trim(),
+      email: newLeadForm.email.trim(),
+      mobile: newLeadForm.mobile.trim(),
+      goal: newLeadForm.goal,
+      message: newLeadForm.message.trim(),
+    };
+
+    const optimisticQuery: ContactQuery = {
+      id: tempId,
+      fullName: payload.fullName,
+      email: payload.email,
+      mobile: payload.mobile,
+      goal: payload.goal,
+      message: payload.message,
+      createdAt: new Date().toISOString(),
+      status: "new",
+      priority: payload.goal === "Wealth Creation" || payload.goal === "Retirement Planning" ? "high" : "medium",
+      notes: [],
+    };
+
+    // 1. UI update first
+    setQueries((prev) => [optimisticQuery, ...prev]);
+    setIsAddModalOpen(false);
+    triggerToast(`New inquiry for ${payload.fullName} added to UI! Saving to DB...`);
+
+    setNewLeadForm({
+      fullName: "",
+      email: "",
+      mobile: "",
+      goal: "Wealth Creation",
+      message: "",
+    });
+
+    // 2. Save to DB
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        // 3. Refetch again from DB
+        await fetchQueries(true);
+        triggerToast("Inquiry saved and synced with DB!");
+      } else {
+        throw new Error("Failed to save");
+      }
+    } catch (err) {
+      console.error("Failed to save lead:", err);
+      setQueries((prev) => prev.filter((q) => q.id !== tempId));
+      triggerToast("Failed to save inquiry to database");
     }
   };
 
@@ -257,12 +405,19 @@ export default function AdminPage() {
   const filteredQueries = useMemo(() => {
     return queries
       .filter((q) => {
+        const fullName = String(q.fullName || "").toLowerCase();
+        const email = String(q.email || "").toLowerCase();
+        const mobile = String(q.mobile || "");
+        const goal = String(q.goal || "").toLowerCase();
+        const msg = String(q.message || "").toLowerCase();
+        const searchLower = search.toLowerCase();
+
         const matchesSearch =
-          q.fullName.toLowerCase().includes(search.toLowerCase()) ||
-          q.email.toLowerCase().includes(search.toLowerCase()) ||
-          q.mobile.includes(search) ||
-          q.goal.toLowerCase().includes(search.toLowerCase()) ||
-          (q.message && q.message.toLowerCase().includes(search.toLowerCase()));
+          fullName.includes(searchLower) ||
+          email.includes(searchLower) ||
+          mobile.includes(search) ||
+          goal.includes(searchLower) ||
+          msg.includes(searchLower);
 
         const matchesStatus = statusFilter === "all" || q.status === statusFilter;
         const matchesGoal = goalFilter === "all" || q.goal === goalFilter;
@@ -330,6 +485,15 @@ export default function AdminPage() {
             {/* Actions & Tools */}
             <div className="flex flex-wrap items-center gap-2.5">
               <button
+                onClick={() => setIsAddModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition-colors shadow-xs"
+                title="Manually create a new client query"
+              >
+                <PlusCircle className="w-4 h-4 text-blue-600" />
+                <span>New Inquiry</span>
+              </button>
+
+              <button
                 onClick={handleSimulateNewQuery}
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-lg border border-teal-200 transition-colors"
                 title="Create a sample form submission to test notifications"
@@ -347,7 +511,7 @@ export default function AdminPage() {
               </button>
 
               <button
-                onClick={fetchQueries}
+                onClick={() => fetchQueries(false)}
                 disabled={loading}
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 rounded-lg transition-colors shadow-xs disabled:opacity-50"
               >
@@ -525,7 +689,7 @@ export default function AdminPage() {
             <div className="relative">
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
+                onChange={(e) => setSortBy(e.target.value as "newest" | "oldest" | "priority")}
                 className="appearance-none text-xs sm:text-sm font-medium bg-slate-50 border border-slate-200 text-slate-700 pl-3 pr-8 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-600 cursor-pointer"
               >
                 <option value="newest">Sort: Newest First</option>
@@ -682,7 +846,7 @@ export default function AdminPage() {
                           <div className="relative inline-block">
                             <select
                               value={query.status}
-                              onChange={(e) => handleStatusChange(query.id, e.target.value as any)}
+                              onChange={(e) => handleStatusChange(query.id, e.target.value as ContactQuery["status"])}
                               className={`appearance-none text-xs font-semibold pl-2.5 pr-7 py-1 rounded-full border cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-500 transition ${statusStyle.bg}`}
                             >
                               <option value="new">New Lead</option>
@@ -919,7 +1083,7 @@ export default function AdminPage() {
                     </label>
                     <select
                       value={selectedQuery.status}
-                      onChange={(e) => handleStatusChange(selectedQuery.id, e.target.value as any)}
+                      onChange={(e) => handleStatusChange(selectedQuery.id, e.target.value as ContactQuery["status"])}
                       className="w-full text-xs font-semibold bg-white border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500"
                     >
                       <option value="new">New Lead</option>
@@ -1048,6 +1212,124 @@ export default function AdminPage() {
                 Close Drawer
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Create New Inquiry Modal */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50/50">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+                  <PlusCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">New Client Inquiry</h3>
+                  <p className="text-xs text-slate-500">Record a new lead directly into database</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsAddModalOpen(false)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateNewQuery} className="p-5 flex flex-col gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={newLeadForm.fullName}
+                  onChange={(e) => setNewLeadForm({ ...newLeadForm, fullName: e.target.value })}
+                  placeholder="e.g. Rahul Sharma"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={newLeadForm.email}
+                    onChange={(e) => setNewLeadForm({ ...newLeadForm, email: e.target.value })}
+                    placeholder="name@example.com"
+                    className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Mobile Number *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={newLeadForm.mobile}
+                    onChange={(e) => setNewLeadForm({ ...newLeadForm, mobile: e.target.value })}
+                    placeholder="+91 98765 43210"
+                    className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Investment Goal
+                </label>
+                <select
+                  value={newLeadForm.goal}
+                  onChange={(e) => setNewLeadForm({ ...newLeadForm, goal: e.target.value })}
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition cursor-pointer"
+                >
+                  <option value="Wealth Creation">Wealth Creation</option>
+                  <option value="Retirement Planning">Retirement Planning</option>
+                  <option value="Child Education">Child Education</option>
+                  <option value="Buying a Home">Buying a Home</option>
+                  <option value="Tax Saving">Tax Saving</option>
+                  <option value="Emergency Fund">Emergency Fund</option>
+                  <option value="Not sure yet">Not sure yet</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Message / Notes (Optional)
+                </label>
+                <textarea
+                  rows={3}
+                  value={newLeadForm.message}
+                  onChange={(e) => setNewLeadForm({ ...newLeadForm, message: e.target.value })}
+                  placeholder="Client requirements or query notes..."
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition resize-none"
+                />
+              </div>
+
+              <div className="pt-2 flex items-center justify-end gap-2.5 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsAddModalOpen(false)}
+                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl transition cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition shadow-xs cursor-pointer"
+                >
+                  Save Inquiry
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

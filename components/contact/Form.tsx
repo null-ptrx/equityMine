@@ -1,32 +1,65 @@
 "use client";
+
+import { useState } from "react";
+
 export function Form() {
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+    setSuccess(false);
+
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form));
 
-    const res = await fetch("/api/contact", {
-      method : "POST", 
-      headers : {
-        "Content-Type" : "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (res.ok) {
-      form.reset();
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        form.reset();
+        setSuccess(true);
+      } else {
+        const errJson = await res.json().catch(() => null);
+        setError(errJson?.error || "Failed to submit inquiry. Please try again.");
+      }
+    } catch {
+      setError("Network error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
     }
-    
-  } 
+  }
+
   return (
     <section aria-labelledby="form-heading" className="bg-white">
       <div className="max-w-6xl mx-auto px-5 py-10 sm:px-8 sm:py-14 lg:px-10 lg:py-20 flex justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-2xl bg-gray-50 border border-gray-200 rounded-2xl p-6 sm:p-10 shadow-sm flex flex-col gap-8">
           <div className="flex flex-col gap-2 text-center sm:text-left">
             <h2 id="form-heading" className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">Request a call back</h2>
-            <p className="text-lg text-gray-600">Share a few details and we'll get in touch at a time that suits you.</p>
+            <p className="text-lg text-gray-600">Share a few details and we&apos;ll get in touch at a time that suits you.</p>
           </div>
+
+          {success && (
+            <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-sm flex items-center gap-2">
+              <span className="font-semibold">✓</span>
+              <span>Thank you! Your inquiry has been submitted successfully. We&apos;ll get in touch with you shortly.</span>
+            </div>
+          )}
+
+          {error && (
+            <div className="p-4 bg-rose-50 border border-rose-200 rounded-lg text-rose-800 text-sm">
+              {error}
+            </div>
+          )}
 
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
@@ -96,9 +129,10 @@ export function Form() {
           <div className="flex flex-col gap-4">
             <button 
               type="submit" 
-              className="w-full sm:w-auto self-start bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto self-start bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold px-8 py-4 rounded-lg shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
             >
-              Request call
+              {isSubmitting ? "Submitting..." : "Request call"}
             </button>
             <p className="text-sm text-gray-500 leading-relaxed">
               By submitting you agree to be contacted about your enquiry. We never share your details with third parties or sell them to anyone. See the privacy policy for what we keep and how to have it removed.

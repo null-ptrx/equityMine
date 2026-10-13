@@ -8,7 +8,7 @@ export function Footer() {
         {/* Top grid — brand, navigate, contact, office */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
           {/* Brand + tagline */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
+          <div className="lg:col-span-3 flex flex-col gap-6">
             <a
               href="/"
               className="flex items-center gap-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-lg p-1 w-fit"
@@ -30,7 +30,7 @@ export function Footer() {
           </div>
 
           {/* Links columns */}
-          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-8">
+          <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
             {/* Navigate */}
             <div className="flex flex-col gap-4">
               <h2 className="text-lg font-semibold text-white uppercase tracking-wider">
@@ -75,6 +75,105 @@ export function Footer() {
                     className="text-accent-400 hover:text-accent-500 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors"
                   >
                     Client Login ↗
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Useful Links */}
+            <div className="flex flex-col gap-4">
+              <h2 className="text-lg font-semibold text-white uppercase tracking-wider">
+                Useful Links
+              </h2>
+              <ul className="flex flex-col gap-2.5">
+                <li>
+                  <a
+                    href="http://www.sebi.gov.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    SEBI ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.amfiindia.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    AMFI ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.bseindia.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    BSE ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.nseindia.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    NSE ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.cdslindia.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    CDSL ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://nsdl.co.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    NSDL ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.pfrda.org.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    PFRDA ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.rbi.org.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    RBI ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://smartodr.in/login"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors inline-flex items-center gap-1"
+                  >
+                    SMARTODR ↗
                   </a>
                 </li>
               </ul>

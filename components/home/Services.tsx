@@ -30,7 +30,7 @@ export function Services() {
               01
             </div>
             <h3 className="text-xl font-bold text-slate-900">
-              <a href="/services#mutual-funds" className="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 rounded-sm">
+              <a href="https://share.google/wF82IrlI3aTP7v2MA" className="hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 rounded-sm">
                 Mutual Funds
               </a>
             </h3>

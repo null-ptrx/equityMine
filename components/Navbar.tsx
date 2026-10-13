@@ -4,27 +4,6 @@ import logo from "../public/logo.png";
 export function Navbar() {
   return (
     <header className="border-b border-slate-200 bg-white relative z-50">
-      {/* Top utility bar — phone number, visible on lg+ */}
-      <div className="hidden lg:block bg-brand-900 text-white text-sm">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-10 flex justify-end items-center gap-6 py-1.5">
-          <a
-            href="tel:+919914440682"
-            className="hover:text-accent-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm"
-          >
-            +91 99144 40682
-          </a>
-          <span aria-hidden="true" className="w-px h-4 bg-brand-700" />
-          <a
-            href="https://www.njindiaonline.in/cdesk/login.fin"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-accent-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm font-medium"
-          >
-            Client Login ↗
-          </a>
-        </div>
-      </div>
-
       <div className="max-w-6xl mx-auto px-5 py-3 sm:px-8 lg:px-10 flex items-center justify-between gap-4">
         {/* Logo + Brand */}
         <a
@@ -65,16 +44,16 @@ export function Navbar() {
 
             {/* Services Dropdown */}
             <li className="relative group">
-              <a
-                href="/services"
-                className="px-3 py-2 rounded-md hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 transition-colors inline-flex items-center gap-1"
+              <span
+                className="px-3 py-2 rounded-md hover:bg-brand-50 hover:text-brand-700 cursor-default inline-flex items-center gap-1"
+                tabIndex={0}
               >
                 Services
                 <svg className="w-4 h-4 mt-px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-              </a>
+              </span>
               <ul className="absolute left-0 top-full mt-1 w-56 bg-white border border-slate-200 rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
                 <li>
-                  <a href="/services#mutual-funds" className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-600 transition-colors">
+                  <a href="https://share.google/wF82IrlI3aTP7v2MA" className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-600 transition-colors">
                     Mutual Funds
                   </a>
                 </li>
@@ -135,7 +114,7 @@ export function Navbar() {
                   </a>
                 </li>
                 <li>
-                  <a href="/mutual-funds" className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-600 transition-colors">
+                  <a href="https://share.google/wF82IrlI3aTP7v2MA" className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-600 transition-colors">
                     Mutual Funds
                   </a>
                 </li>
@@ -144,10 +123,13 @@ export function Navbar() {
 
             <li>
               <a
-                href="/contact"
-                className="px-3 py-2 rounded-md hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 transition-colors"
+                href="https://www.njindiaonline.in/cdesk/login.fin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-2 rounded-md text-brand-600 hover:bg-brand-50 hover:text-brand-700 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 transition-colors inline-flex items-center gap-1"
               >
-                Contact
+                Client Login
+                <svg className="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
               </a>
             </li>
 
@@ -199,7 +181,7 @@ export function Navbar() {
                     <svg className="w-4 h-4 transition-transform group-open/services:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                   </summary>
                   <ul className="pl-4 pb-2">
-                    <li><a href="/services#mutual-funds" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Mutual Funds</a></li>
+                    <li><a href="https://share.google/wF82IrlI3aTP7v2MA" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Mutual Funds</a></li>
                     <li><a href="/services#insurance" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Insurance</a></li>
                     <li><a href="/services#fd-bonds" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Fixed Deposits &amp; Bonds</a></li>
                   </ul>
@@ -230,16 +212,11 @@ export function Navbar() {
                   <ul className="pl-4 pb-2">
                     <li><a href="/blog" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Blog</a></li>
                     <li><a href="/news" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">News</a></li>
-                    <li><a href="/mutual-funds" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Mutual Funds</a></li>
+                    <li><a href="https://share.google/wF82IrlI3aTP7v2MA" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Mutual Funds</a></li>
                   </ul>
                 </details>
               </li>
 
-              <li>
-                <a href="/contact" className="block py-3 border-b border-slate-100 hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 rounded-sm">
-                  Contact
-                </a>
-              </li>
               <li>
                 <a href="https://www.njindiaonline.in/cdesk/login.fin" target="_blank" rel="noopener noreferrer" className="block py-3 border-b border-slate-100 text-brand-600 hover:text-brand-700 font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 rounded-sm">
                   Client Login ↗

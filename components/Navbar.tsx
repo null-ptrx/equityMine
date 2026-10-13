@@ -120,7 +120,6 @@ export function Navbar() {
                 </li>
               </ul>
             </li>
-
             <li>
               <a
                 href="https://www.njindiaonline.in/cdesk/login.fin"
@@ -217,6 +216,11 @@ export function Navbar() {
                 </details>
               </li>
 
+              <li>
+                <a href="/contact" className="block py-3 border-b border-slate-100 hover:text-brand-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 rounded-sm">
+                  Contact
+                </a>
+              </li>
               <li>
                 <a href="https://www.njindiaonline.in/cdesk/login.fin" target="_blank" rel="noopener noreferrer" className="block py-3 border-b border-slate-100 text-brand-600 hover:text-brand-700 font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 rounded-sm">
                   Client Login ↗

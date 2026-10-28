@@ -31,7 +31,7 @@ export default function ContactPage() {
       <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            
+
             {/* Left Column: Contact info & Trust badges */}
             <div className="lg:col-span-5 flex flex-col gap-6">
               <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 flex flex-col gap-6 shadow-xs">
@@ -65,7 +65,7 @@ export default function ContactPage() {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Email Inquiry</span>
-                      <span className="text-base font-semibold text-slate-800 group-hover:text-brand-600 transition-colors">equitymine@support.in</span>
+                      <span className="text-base font-semibold text-slate-800 group-hover:text-brand-600 transition-colors">support@equitymine.in</span>
                       <span className="text-xs text-slate-500">Average response time: &lt; 2 hours</span>
                     </div>
                   </a>

@@ -1,8 +1,10 @@
 import React from 'react';
+import { AccountOpenButton } from '@/components/AccountOpenButton';
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans relative">
+      <AccountOpenButton />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 text-white py-20 px-6 sm:px-12">
         <div className="max-w-5xl mx-auto text-center">

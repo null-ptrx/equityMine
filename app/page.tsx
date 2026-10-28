@@ -3,10 +3,12 @@ import { About } from "@/components/home/About";
 import { Services } from "@/components/home/Services";
 import { WhyUs } from "@/components/home/WhyUs";
 import { Form } from "@/components/contact/Form";
+import { AccountOpenButton } from "@/components/AccountOpenButton";
 
 export default function Home() {
   return (
     <>
+      <AccountOpenButton />
       {/* 1. Hero */}
       <Hero />
 

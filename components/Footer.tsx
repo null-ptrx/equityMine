@@ -25,7 +25,7 @@ export function Footer() {
               </span>
             </a>
             <p className="text-base sm:text-lg text-brand-100/80 leading-relaxed max-w-sm">
-              Helping families across Mansa invest with a plan they understand, in plain language and without the jargon.
+              We'll Give You an <span className="text-accent-400">Edge</span>
             </p>
           </div>
 
@@ -225,7 +225,7 @@ export function Footer() {
           <p className="text-sm text-brand-100/80">
             ARN No. 277368
           </p>
-         
+
         </div>
 
         {/* Statutory disclaimer */}

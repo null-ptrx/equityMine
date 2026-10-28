@@ -80,15 +80,15 @@ export function Navbar() {
                 Tools
                 <svg className="w-4 h-4 mt-px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
-              <ul className="absolute left-0 top-full mt-1 w-52 bg-white border border-slate-200 rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
+              <ul className="absolute left-0 top-full mt-1 w-52 bg-white border border-slate-200 rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 before:absolute before:-top-2 before:left-0 before:w-full before:h-2">
                 <li>
                   <a href="https://www.njmutualfund.com/calculator" target="_blank" rel="noopener noreferrer" className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-600 transition-colors">
                     Calculators ↗
                   </a>
                 </li>
                 <li>
-                  <a href="/research" className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-600 transition-colors">
-                    MF Research
+                  <a href="https://www.njwealth.in/mfcalculator?rpt=insight" target="_blank" rel="noopener noreferrer" className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-600 transition-colors">
+                    MF Research ↗
                   </a>
                 </li>
               </ul>
@@ -197,7 +197,7 @@ export function Navbar() {
                   </summary>
                   <ul className="pl-4 pb-2">
                     <li><a href="https://www.njmutualfund.com/calculator" target="_blank" rel="noopener noreferrer" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Calculators ↗</a></li>
-                    <li><a href="/research" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MF Research</a></li>
+                    <li><a href="https://www.njwealth.in/mfcalculator?rpt=insight" target="_blank" rel="noopener noreferrer" className="block py-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MF Research ↗</a></li>
                   </ul>
                 </details>
               </li>

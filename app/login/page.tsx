@@ -6,12 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   Lock,
   Mail,
-  AlertCircle,
   ShieldAlert,
-  ShieldCheck,
   ArrowRight,
-  User,
-  KeyRound,
   CheckCircle2,
 } from "lucide-react";
 import logo from "../../public/logo.png";
@@ -72,17 +68,6 @@ function LoginForm() {
     }
   };
 
-  const autofillCredentials = (role: "admin" | "user") => {
-    if (role === "admin") {
-      setEmail("admin@equitymine.com");
-      setPassword("AdminPassword123!");
-    } else {
-      setEmail("user@equitymine.com");
-      setPassword("UserPassword123!");
-    }
-    setErrorMessage(null);
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
@@ -102,7 +87,7 @@ function LoginForm() {
           Sign In to Your Account
         </h1>
         <p className="mt-2 text-sm text-slate-600">
-          Enter your administrator or user credentials below
+          Enter your credentials to continue
         </p>
       </div>
 
@@ -141,7 +126,7 @@ function LoginForm() {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@equitymine.com"
+                  placeholder="name@example.com"
                   className="block w-full pl-10 pr-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600 text-slate-900"
                 />
               </div>
@@ -184,48 +169,6 @@ function LoginForm() {
               )}
             </button>
           </form>
-
-          {/* Quick Demo Credentials Box */}
-          <div className="mt-8 pt-6 border-t border-slate-200">
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
-              Quick Test Credentials
-            </p>
-            <div className="grid grid-cols-2 gap-2.5">
-              <button
-                type="button"
-                onClick={() => autofillCredentials("admin")}
-                className="p-3 text-left border border-emerald-200 bg-emerald-50/60 hover:bg-emerald-100/60 rounded-xl transition-colors cursor-pointer group"
-              >
-                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Admin User</span>
-                </div>
-                <div className="text-[11px] text-emerald-700 mt-1 truncate">
-                  admin@equitymine.com
-                </div>
-                <div className="text-[10px] text-emerald-600 mt-0.5">
-                  Role: <span className="font-semibold">admin (Access OK)</span>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => autofillCredentials("user")}
-                className="p-3 text-left border border-amber-200 bg-amber-50/60 hover:bg-amber-100/60 rounded-xl transition-colors cursor-pointer group"
-              >
-                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-800">
-                  <User className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Standard User</span>
-                </div>
-                <div className="text-[11px] text-amber-700 mt-1 truncate">
-                  user@equitymine.com
-                </div>
-                <div className="text-[10px] text-amber-600 mt-0.5">
-                  Role: <span className="font-semibold">user (Forbidden)</span>
-                </div>
-              </button>
-            </div>
-          </div>
         </div>
 
         <div className="mt-6 text-center text-xs text-slate-500">

@@ -339,7 +339,7 @@ export default function Home() {
                     <div className="flex flex-col">
                       <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Phone Support</span>
                       <span className="text-base font-semibold text-slate-800 group-hover:text-brand-600 transition-colors">+91 99144 40682</span>
-                      <span className="text-xs text-slate-500">Mon – Sat · 10:00 AM to 7:00 PM</span>
+                      <span className="text-xs text-slate-500">Mon – Fri · 9:00 AM to 5:00 PM</span>
                     </div>
                   </a>
 
@@ -353,7 +353,7 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Email Inquiry</span>
-                      <span className="text-base font-semibold text-slate-800 group-hover:text-brand-600 transition-colors">equitymine@support.in</span>
+                      <span className="text-base font-semibold text-slate-800 group-hover:text-brand-600 transition-colors">support@equitymine.in</span>
                       <span className="text-xs text-slate-500">Typically replies within 2 hours</span>
                     </div>
                   </a>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import logo from "../public/logo.png";
 
+
 export function Navbar() {
   return (
     <header className="border-b border-slate-200 bg-white relative z-50">
@@ -12,10 +13,10 @@ export function Navbar() {
         >
           <Image
             src={logo}
-            height={52}
+            height={53}
             alt="Equity Mine Logo"
             placeholder="blur"
-            className="w-auto h-10 sm:h-[52px]"
+            className="w-auto h-10 sm:h-[60px]"
           />
           <span className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
             Equity Mine

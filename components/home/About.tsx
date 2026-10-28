@@ -12,7 +12,7 @@ export function About() {
               Helping families make informed investment decisions.
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
-              [Client bio goes here — a short paragraph about background, how the practice started, and the approach to financial guidance for families in Mansa and nearby areas.]
+              The best plan is the one you can actually keep. I would rather you invest a little every month for twenty years than a great deal for two.
             </p>
             <ul className="flex flex-col gap-3 text-base text-slate-700">
               <li className="flex items-start gap-2">
@@ -21,12 +21,13 @@ export function About() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-brand-500 mt-1" aria-hidden="true">✓</span>
-                [Certification / qualification placeholder]
+                NISM Series V-A Certified
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-brand-500 mt-1" aria-hidden="true">✓</span>
-                [Education / degree placeholder]
+                IRDAI Certified
               </li>
+          
             </ul>
             <a
               href="/about"
@@ -42,10 +43,10 @@ export function About() {
             <div className="absolute top-0 left-0 w-full h-1.5 bg-brand-600 rounded-t-2xl" />
             <div className="flex flex-col gap-6">
               <blockquote className="text-xl sm:text-2xl italic font-medium text-slate-800 border-l-4 border-brand-500 pl-4">
-                &ldquo;[Personal quote or philosophy placeholder]&rdquo;
+                &ldquo;Our philosophy&rdquo;
               </blockquote>
               <p className="text-slate-600 leading-relaxed">
-                [A brief note on the approach to investing — understanding goals before recommending any product, keeping plans simple, and staying available for questions.]
+                I believe investing should never be about following trends or chasing returns. It should begin with understanding what matters to you, choosing the right path, and staying committed to it.
               </p>
               <div className="flex items-center gap-3 pt-2 border-t border-brand-100">
                 <div className="w-12 h-12 bg-brand-600 rounded-full flex items-center justify-center text-white font-bold text-lg">

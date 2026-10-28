@@ -195,9 +195,9 @@ export function Footer() {
                   href="mailto:equitymine@support.in"
                   className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors break-all"
                 >
-                  equitymine@support.in
+                  support@equitymine.in
                 </a>
-                <span>Mon – Sat · 10:00 AM to 7:00 PM</span>
+                <span>Mon – Fri · 9:00 AM to 5:00 PM</span>
               </address>
             </div>
 
@@ -225,9 +225,7 @@ export function Footer() {
           <p className="text-sm text-brand-100/80">
             ARN No. 277368
           </p>
-          <p className="text-sm text-brand-100/80">
-            Initial registration on [valid till DD.MM.YYYY] | Valid till [valid till DD.MM.YYYY]
-          </p>
+         
         </div>
 
         {/* Statutory disclaimer */}
@@ -239,7 +237,7 @@ export function Footer() {
             Mutual fund investments are subject to market risks. Read all scheme-related documents carefully. Past performance is not indicative of future returns. The calculators and content on this site are for illustrative and educational purposes only and do not constitute investment advice. Please consult your mutual fund distributor before investing.
           </p>
           <p>
-            Grievance redressal: Jitender Singh · <a href="mailto:equitymine@support.in" className="underline hover:text-white transition-colors">equitymine@support.in</a> · <a href="tel:+919914440682" className="underline hover:text-white transition-colors">+91 99144 40682</a>. Unresolved complaints may be escalated to <a href="https://www.amfiindia.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">AMFI</a> or through <a href="https://scores.sebi.gov.in" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">SEBI SCORES</a>. Full details on the <a href="/disclaimer" className="underline hover:text-white transition-colors">disclaimer page</a>.
+            Grievance redressal: Jitender Singh · <a href="mailto:equitymine@support.in" className="underline hover:text-white transition-colors">support@equitymine.in</a> · <a href="tel:+919914440682" className="underline hover:text-white transition-colors">+91 99144 40682</a>. Unresolved complaints may be escalated to <a href="https://www.amfiindia.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">AMFI</a> or through <a href="https://scores.sebi.gov.in" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">SEBI SCORES</a>.
           </p>
         </div>
 

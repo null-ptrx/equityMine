@@ -79,7 +79,7 @@ function LoginForm() {
             placeholder="blur"
             className="w-auto h-12"
           />
-          <span className="text-2xl font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
+          <span className="text-2xl font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
             Equity Mine
           </span>
         </a>
@@ -103,8 +103,8 @@ function LoginForm() {
 
           {/* Success Banner */}
           {successInfo && (
-            <div className="mb-6 p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 text-sm flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
+            <div className="mb-6 p-4 rounded-xl bg-brand-50 border border-brand-200 text-brand-800 text-sm flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-brand-600 shrink-0 mt-0.5" />
               <div className="leading-relaxed">{successInfo}</div>
             </div>
           )}
@@ -127,7 +127,7 @@ function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="block w-full pl-10 pr-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600 text-slate-900"
+                  className="block w-full pl-10 pr-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-brand-600 text-slate-900"
                 />
               </div>
             </div>
@@ -149,7 +149,7 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="block w-full pl-10 pr-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600 text-slate-900"
+                  className="block w-full pl-10 pr-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-brand-600 text-slate-900"
                 />
               </div>
             </div>
@@ -157,7 +157,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center items-center gap-2 py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-600 disabled:opacity-50 transition-colors cursor-pointer"
+              className="w-full flex justify-center items-center gap-2 py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-600 disabled:opacity-50 transition-colors cursor-pointer"
             >
               {loading ? (
                 <span>Authenticating...</span>
@@ -172,7 +172,7 @@ function LoginForm() {
         </div>
 
         <div className="mt-6 text-center text-xs text-slate-500">
-          <a href="/" className="hover:text-teal-700 transition-colors">
+          <a href="/" className="hover:text-brand-600 transition-colors">
             ← Back to Homepage
           </a>
         </div>

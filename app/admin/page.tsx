@@ -49,7 +49,7 @@ const GOAL_BADGES: Record<string, { bg: string; text: string; border: string }> 
   "Retirement Planning": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
   "Child Education": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
   "Buying a Home": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
-  "Tax Saving": { bg: "bg-teal-50", text: "text-teal-700", border: "border-teal-200" },
+  "Tax Saving": { bg: "bg-brand-50", text: "text-brand-700", border: "border-brand-200" },
   "Emergency Fund": { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" },
   "Not sure yet": { bg: "bg-slate-100", text: "text-slate-600", border: "border-slate-200" },
 };
@@ -520,7 +520,7 @@ export default function AdminPage() {
                 <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
                   Contact Form Inquiries
                 </h1>
-                <span className="ml-2 px-2.5 py-0.5 text-xs font-semibold rounded-full bg-teal-50 text-teal-700 border border-teal-200">
+                <span className="ml-2 px-2.5 py-0.5 text-xs font-semibold rounded-full bg-brand-50 text-brand-700 border border-brand-200">
                   Admin Console
                 </span>
               </div>
@@ -533,19 +533,19 @@ export default function AdminPage() {
             <div className="flex flex-wrap items-center gap-2.5">
               <button
                 onClick={() => setIsAddModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition-colors shadow-xs"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-lg border border-brand-200 transition-colors shadow-xs"
                 title="Manually create a new client query"
               >
-                <PlusCircle className="w-4 h-4 text-blue-600" />
+                <PlusCircle className="w-4 h-4 text-brand-600" />
                 <span>New Inquiry</span>
               </button>
 
               <button
                 onClick={handleSimulateNewQuery}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-lg border border-teal-200 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium text-brand-800 bg-brand-50 hover:bg-brand-100 rounded-lg border border-brand-200 transition-colors"
                 title="Create a sample form submission to test notifications"
               >
-                <PlusCircle className="w-4 h-4 text-teal-600" />
+                <PlusCircle className="w-4 h-4 text-brand-600" />
                 <span>Simulate Query</span>
               </button>
 
@@ -577,10 +577,10 @@ export default function AdminPage() {
 
               {currentUser && (
                 <div className="hidden md:flex items-center gap-2 pl-2 border-l border-slate-200 text-xs">
-                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-teal-50 text-teal-800 border border-teal-200">
-                    <ShieldCheck className="w-3.5 h-3.5 text-teal-600" />
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-brand-50 text-brand-800 border border-brand-200">
+                    <ShieldCheck className="w-3.5 h-3.5 text-brand-600" />
                     <span className="font-semibold truncate max-w-[120px]">{currentUser.name}</span>
-                    <span className="text-[10px] bg-teal-200/80 text-teal-900 px-1.5 py-0.5 rounded font-bold uppercase">
+                    <span className="text-[10px] bg-brand-200/80 text-brand-900 px-1.5 py-0.5 rounded font-bold uppercase">
                       {currentUser.role}
                     </span>
                   </div>
@@ -607,7 +607,7 @@ export default function AdminPage() {
             onClick={() => setStatusFilter("all")}
             className={`p-4 sm:p-5 rounded-2xl bg-white border cursor-pointer transition-all ${
               statusFilter === "all"
-                ? "border-teal-500 ring-2 ring-teal-500/20 shadow-sm"
+                ? "border-brand-500 ring-2 ring-brand-500/20 shadow-sm"
                 : "border-slate-200 hover:border-slate-300 shadow-xs"
             }`}
           >
@@ -796,7 +796,7 @@ export default function AdminPage() {
         {/* Query Records List */}
         {loading ? (
           <div className="bg-white rounded-2xl border border-slate-200 p-16 text-center shadow-xs">
-            <RefreshCw className="w-8 h-8 text-teal-600 animate-spin mx-auto mb-3" />
+            <RefreshCw className="w-8 h-8 text-brand-600 animate-spin mx-auto mb-3" />
             <p className="text-slate-600 font-medium">Loading user queries...</p>
           </div>
         ) : filteredQueries.length === 0 ? (
@@ -815,7 +815,7 @@ export default function AdminPage() {
                   setStatusFilter("all");
                   setGoalFilter("all");
                 }}
-                className="mt-4 px-4 py-2 text-xs font-semibold text-teal-700 bg-teal-50 hover:bg-teal-100 rounded-lg transition"
+                className="mt-4 px-4 py-2 text-xs font-semibold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-lg transition"
               >
                 Reset All Filters
               </button>
@@ -844,7 +844,7 @@ export default function AdminPage() {
                     return (
                       <tr
                         key={query.id}
-                        className="hover:bg-teal-50/20 transition-colors group cursor-pointer"
+                        className="hover:bg-brand-50/40 transition-colors group cursor-pointer"
                         onClick={() => setSelectedQuery(query)}
                       >
                         {/* Client details */}
@@ -860,7 +860,7 @@ export default function AdminPage() {
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center gap-2">
-                                <p className="font-semibold text-slate-900 group-hover:text-teal-700 transition-colors">
+                                <p className="font-semibold text-slate-900 group-hover:text-brand-600 transition-colors">
                                   {query.fullName}
                                 </p>
                                 {query.priority === "high" && (
@@ -915,7 +915,7 @@ export default function AdminPage() {
                             <select
                               value={query.status}
                               onChange={(e) => handleStatusChange(query.id, e.target.value as ContactQuery["status"])}
-                              className={`appearance-none text-xs font-semibold pl-2.5 pr-7 py-1 rounded-full border cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-500 transition ${statusStyle.bg}`}
+                              className={`appearance-none text-xs font-semibold pl-2.5 pr-7 py-1 rounded-full border cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 transition ${statusStyle.bg}`}
                             >
                               <option value="new">New Lead</option>
                               <option value="in_progress">In Review</option>
@@ -960,7 +960,7 @@ export default function AdminPage() {
                             <button
                               onClick={() => setSelectedQuery(query)}
                               title="View Full Details"
-                              className="p-1.5 text-slate-500 hover:text-teal-700 hover:bg-teal-50 rounded-lg transition"
+                              className="p-1.5 text-slate-500 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition"
                             >
                               <Eye className="w-4 h-4" />
                             </button>
@@ -998,7 +998,7 @@ export default function AdminPage() {
                 <div
                   key={query.id}
                   onClick={() => setSelectedQuery(query)}
-                  className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:border-teal-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+                  className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:border-brand-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
                 >
                   <div>
                     {/* Header: ID & Status */}
@@ -1074,7 +1074,7 @@ export default function AdminPage() {
             {/* Drawer Header */}
             <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-teal-600 text-white font-bold text-base flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-brand-600 text-white font-bold text-base flex items-center justify-center">
                   {selectedQuery.fullName
                     .split(" ")
                     .map((n) => n[0])
@@ -1123,9 +1123,9 @@ export default function AdminPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => handleStatusChange(selectedQuery.id, "contacted")}
-                  className="flex flex-col items-center justify-center p-3 rounded-xl bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 font-semibold text-xs transition"
+                  className="flex flex-col items-center justify-center p-3 rounded-xl bg-brand-50 hover:bg-brand-100 border border-brand-200 text-brand-800 font-semibold text-xs transition"
                 >
-                  <Sparkles className="w-4 h-4 mb-1 text-teal-600" />
+                  <Sparkles className="w-4 h-4 mb-1 text-brand-600" />
                   <span>WhatsApp</span>
                 </a>
 
@@ -1152,7 +1152,7 @@ export default function AdminPage() {
                     <select
                       value={selectedQuery.status}
                       onChange={(e) => handleStatusChange(selectedQuery.id, e.target.value as ContactQuery["status"])}
-                      className="w-full text-xs font-semibold bg-white border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full text-xs font-semibold bg-white border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"
                     >
                       <option value="new">New Lead</option>
                       <option value="in_progress">In Review</option>
@@ -1192,7 +1192,7 @@ export default function AdminPage() {
                   </div>
                   <div className="py-2.5 flex justify-between items-center">
                     <span className="text-slate-500 text-xs">Target Goal</span>
-                    <span className="font-semibold text-teal-700">{selectedQuery.goal}</span>
+                    <span className="font-semibold text-brand-700">{selectedQuery.goal}</span>
                   </div>
                   {selectedQuery.lastContactedAt && (
                     <div className="py-2.5 flex justify-between items-center">
@@ -1251,7 +1251,7 @@ export default function AdminPage() {
                       if (e.key === "Enter") handleAddNote(selectedQuery.id);
                     }}
                     placeholder="Add meeting note or call update..."
-                    className="flex-1 text-xs px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="flex-1 text-xs px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                   />
                   <button
                     onClick={() => handleAddNote(selectedQuery.id)}
@@ -1290,7 +1290,7 @@ export default function AdminPage() {
           <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
             <div className="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50/50">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+                <div className="p-2 bg-brand-50 text-brand-600 rounded-xl">
                   <PlusCircle className="w-5 h-5" />
                 </div>
                 <div>
@@ -1317,7 +1317,7 @@ export default function AdminPage() {
                   value={newLeadForm.fullName}
                   onChange={(e) => setNewLeadForm({ ...newLeadForm, fullName: e.target.value })}
                   placeholder="e.g. Rahul Sharma"
-                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-600 transition"
                 />
               </div>
 
@@ -1332,7 +1332,7 @@ export default function AdminPage() {
                     value={newLeadForm.email}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, email: e.target.value })}
                     placeholder="name@example.com"
-                    className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                    className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-600 transition"
                   />
                 </div>
                 <div>
@@ -1345,7 +1345,7 @@ export default function AdminPage() {
                     value={newLeadForm.mobile}
                     onChange={(e) => setNewLeadForm({ ...newLeadForm, mobile: e.target.value })}
                     placeholder="+91 98765 43210"
-                    className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                    className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-600 transition"
                   />
                 </div>
               </div>
@@ -1357,7 +1357,7 @@ export default function AdminPage() {
                 <select
                   value={newLeadForm.goal}
                   onChange={(e) => setNewLeadForm({ ...newLeadForm, goal: e.target.value })}
-                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition cursor-pointer"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-600 transition cursor-pointer"
                 >
                   <option value="Wealth Creation">Wealth Creation</option>
                   <option value="Retirement Planning">Retirement Planning</option>
@@ -1378,7 +1378,7 @@ export default function AdminPage() {
                   value={newLeadForm.message}
                   onChange={(e) => setNewLeadForm({ ...newLeadForm, message: e.target.value })}
                   placeholder="Client requirements or query notes..."
-                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition resize-none"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-600 transition resize-none"
                 />
               </div>
 
@@ -1392,7 +1392,7 @@ export default function AdminPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition shadow-xs cursor-pointer"
+                  className="px-5 py-2 text-xs font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-xl transition shadow-xs cursor-pointer"
                 >
                   Save Inquiry
                 </button>

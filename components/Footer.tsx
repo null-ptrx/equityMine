@@ -246,23 +246,6 @@ export function Footer() {
           <p>
             © 2026 Jitender Singh · ARN-277368 · EUIN E522524
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <a href="/privacy" className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors">
-              Privacy Policy
-            </a>
-            <span aria-hidden="true" className="w-1 h-1 bg-brand-700 rounded-full" />
-            <a href="/terms" className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors">
-              Terms of Use
-            </a>
-            <span aria-hidden="true" className="w-1 h-1 bg-brand-700 rounded-full" />
-            <a href="/disclaimer" className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors">
-              Disclaimer
-            </a>
-            <span aria-hidden="true" className="w-1 h-1 bg-brand-700 rounded-full" />
-            <a href="/disclosure" className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-sm transition-colors">
-              Commission Disclosure
-            </a>
-          </div>
         </div>
       </div>
     </footer>

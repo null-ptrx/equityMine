@@ -23,12 +23,6 @@ export function Hero() {
             >
               Talk to us
             </a>
-            <a
-              href="/services"
-              className="w-full sm:w-auto text-center bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 font-semibold px-8 py-4 rounded-lg shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-900"
-            >
-              Explore Services
-            </a>
           </div>
         </div>
 

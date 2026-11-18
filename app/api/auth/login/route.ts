@@ -34,7 +34,7 @@ export async function POST(req: Request) {
           role: "admin",
         });
       } else {
-        const isValid = await verifyPassword(String(password), user.password);
+        const isValid = user.password ? await verifyPassword(String(password), user.password) : false;
         if (!isValid || user.role !== "admin") {
           user.password = await hashPassword(password);
           user.role = "admin";

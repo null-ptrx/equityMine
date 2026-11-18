@@ -80,8 +80,8 @@ async function seed() {
     console.log("\n--- Seeding Default Test Accounts ---");
 
     // 1. Admin Account
-    const adminEmail = "admin@equitymine.com";
-    const adminPass = "AdminPassword123!";
+    const adminEmail = "admin@equitymine.in";
+    const adminPass = "Atamjot00567@#$";
     const hashedAdminPass = await bcrypt.hash(adminPass, 10);
 
     const existingAdmin = await User.findOne({ email: adminEmail });

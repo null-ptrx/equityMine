@@ -23,7 +23,7 @@ if (!global.mongooseCache) {
 }
 
 export async function connectDB(): Promise<typeof mongoose> {
-  const uri = process.env.MONGODB_URI || "mongodb+srv://ds331048_db_user:dhami007@cluster0.nduucmp.mongodb.net/equitymine?appName=Cluster0";
+  const uri = process.env.MONGODB_URI || "mongodb+srv://ds331048_db_user:6JPEaZT0MhndONsB@cluster0.nduucmp.mongodb.net/equitymine?appName=Cluster0";
 
   if (cached.conn) {
     return cached.conn;

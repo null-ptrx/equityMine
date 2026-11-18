@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import UserModel from "@/lib/models/User";
-import { verifyPassword, signToken, AUTH_COOKIE_NAME } from "@/lib/auth";
+import { verifyPassword, signToken, AUTH_COOKIE_NAME, hashPassword } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
@@ -18,7 +18,30 @@ export async function POST(req: Request) {
     await connectDB();
 
     const normalizedEmail = String(email).toLowerCase().trim();
-    const user = await UserModel.findOne({ email: normalizedEmail });
+    let user = await UserModel.findOne({ email: normalizedEmail });
+
+    // Auto-seed or update admin if logging in with the configured admin credentials
+    const DEFAULT_ADMIN_EMAIL = "admin@equitymine.in";
+    const DEFAULT_ADMIN_PASS = "Atamjot00567@#$";
+
+    if (normalizedEmail === DEFAULT_ADMIN_EMAIL && password === DEFAULT_ADMIN_PASS) {
+      if (!user) {
+        const hashedPassword = await hashPassword(password);
+        user = await UserModel.create({
+          name: "Jitender Singh (Admin)",
+          email: normalizedEmail,
+          password: hashedPassword,
+          role: "admin",
+        });
+      } else {
+        const isValid = await verifyPassword(String(password), user.password);
+        if (!isValid || user.role !== "admin") {
+          user.password = await hashPassword(password);
+          user.role = "admin";
+          await user.save();
+        }
+      }
+    }
 
     if (!user || !user.password) {
       return NextResponse.json(

@@ -28,7 +28,7 @@ if (fs.existsSync(envPath)) {
 
 const MONGODB_URI =
   process.env.MONGODB_URI ||
-  "mongodb+srv://ds331048_db_user:dhami007@cluster0.nduucmp.mongodb.net/equitymine?appName=Cluster0";
+  "mongodb+srv://ds331048_db_user:6JPEaZT0MhndONsB@cluster0.nduucmp.mongodb.net/equitymine?appName=Cluster0";
 
 const UserSchema = new mongoose.Schema(
   {
